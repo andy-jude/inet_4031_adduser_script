@@ -13,9 +13,9 @@ import sys #Allows us to use command line operations within our code.
 def main():
     DryRun = input("Would you like to run this program in dry-run mode? (y/n):  ")
     if DryRun == 'y':
-        print("This prgram is running in dry-run mode.  Changes will not be made to the operating system during this time.")
+        print("This program is running in dry-run mode.  Changes will not be made to the operating system during this time.")
     elif DryRun == 'n':
-        print("This prgram is running in normal mode.  All changes will be made to the operating system.  Please proceed with caution")
+        print("This program is running in normal mode.  All changes will be made to the operating system.  Please proceed with caution")
     else:
         print("Not a valid entry.  Please restart the program and try again")
         quit()
@@ -53,7 +53,7 @@ def main():
 
         #The following statement below is commented out to prevent accidental creation of a new user if you are not ready.  Please only uncomment this command if you are ready to create a new user and have done a test run in the past.
         if DryRun == 'y':
-            print cmd
+            print(cmd)
         else:
             os.system(cmd)
 
@@ -64,7 +64,7 @@ def main():
 
         #The following lines should be uncommented once you are certain the code is running properly and you are ready to add the new user.  Once you have run a test run of the program, please uncomment the following lines of code to have it execute.
         if DryRun == 'y':
-            print cmd        
+            print(cmd)       
         else:
             os.system(cmd)
 
@@ -73,8 +73,10 @@ def main():
             if group != '-':
                 print("==> Assigning %s to the %s group..." % (username,group))
                 cmd = "/usr/sbin/adduser %s %s" % (username,group)
-                #print cmd
-                #os.system(cmd)
+                if DryRun == "y":
+                    print(cmd)
+                else:
+                    os.system(cmd)              
 
 if __name__ == '__main__':
     main()
