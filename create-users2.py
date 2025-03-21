@@ -11,8 +11,16 @@ import sys #Allows us to use command line operations within our code.
 
 
 def main():
-    for line in sys.stdin:
+    DryRun = input("Would you like to run this program in dry-run mode? (y/n):  ")
+    if DryRun == 'y':
+        print("This prgram is running in dry-run mode.  Changes will not be made to the operating system during this time.")
+    elif DryRun == 'n':
+        print("This prgram is running in normal mode.  All changes will be made to the operating system.  Please proceed with caution")
+    else:
+        print("Not a valid entry.  Please restart the program and try again")
+        quit()
 
+    for line in sys.stdin:
         #This will check to see if the line starts with "#".  If it does, it will skip the line since it is meant to be ignored.
         #We can use "#" in front of our lines in our create-users.input file if we want to temporarily skip adding that user for now.  Think of a comment in Python code, we just want to skip it for now.
         match = re.match("^#",line)
@@ -44,8 +52,10 @@ def main():
         cmd = "/usr/sbin/adduser --disabled-password --gecos '%s' %s" % (gecos,username)
 
         #The following statement below is commented out to prevent accidental creation of a new user if you are not ready.  Please only uncomment this command if you are ready to create a new user and have done a test run in the past.
-        #print cmd
-        #os.system(cmd)
+        if DryRun == 'y':
+            print cmd
+        else:
+            os.system(cmd)
 
         #The following print statement confirms the password is being set for the user being processed.
         print("==> Setting the password for %s..." % (username))
@@ -53,8 +63,10 @@ def main():
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password,password,username)
 
         #The following lines should be uncommented once you are certain the code is running properly and you are ready to add the new user.  Once you have run a test run of the program, please uncomment the following lines of code to have it execute.
-        #print cmd
-        #os.system(cmd)
+        if DryRun == 'y':
+            print cmd        
+        else:
+            os.system(cmd)
 
         for group in groups:
             #"-" is a placeholder if the user should not be assigned to any group.  If there is not a "-" in the user's group settings, they will be assigned to the correct group(s) below.
