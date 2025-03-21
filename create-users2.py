@@ -11,7 +11,7 @@ import sys #Allows us to use command line operations within our code.
 
 
 def main():
-    DryRun = input("Would you like to run this program in dry-run mode? (y/n):  ")
+    DryRun = input("Would you like to run this program in dry-run mode? (y/n):  ").lower()
     if DryRun == 'y':
         print("This program is running in dry-run mode.  Changes will not be made to the operating system during this time.")
     elif DryRun == 'n':
