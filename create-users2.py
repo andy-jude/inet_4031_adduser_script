@@ -11,12 +11,14 @@ import sys #Allows us to use command line operations within our code.
 
 
 def main():
-    DryRun = input("Would you like to run this program in dry-run mode? (y/n):  ").lower()
+    #DryRun allows us to run the program to make sure all aspects are working before making any modifications to the operating system.  
+    #It is highly recommended you run a dry run of this program before trying to add users to make sure it is all working correctly.  Once you have completed a dry run, feel free to run the program like normal by answering "n" to this prompt.
+    DryRun = input("Would you like to run this program in dry-run mode? (y/n):  ").lower() 
     if DryRun == 'y':
         print("This program is running in dry-run mode.  Changes will not be made to the operating system during this time.")
     elif DryRun == 'n':
         print("This program is running in normal mode.  All changes will be made to the operating system.  Please proceed with caution")
-    else:
+    else: #Quits the program if a valid entry was not entered.
         print("Not a valid entry.  Please restart the program and try again")
         quit()
 
@@ -38,7 +40,7 @@ def main():
         #The if statement relies on the previous two lines to determine if we should be adding this user or skipping them and to determine if the user has enough info to be added to the system.
         #It is doing that to make sure the program is receiving good information and is error handling.  If wrong information is passed in, it could create a bad user or cause the program to crash, which is obviously not good.
         if match or len(fields) != 5:
-            if DryRun == 'y':
+            if DryRun == 'y': #Lets the user know there might be an error with adding a user or a user is being skipped during the dry run process.
                 print("Skipping adding user due to insufficient information or user requested skipping the user")
             continue
 
@@ -60,18 +62,17 @@ def main():
         if DryRun == 'y':
             print(cmd)
         else:
-            os.system(cmd)
+            os.system(cmd) #Will add users to the OS if this is not a dry run.
 
         #The following print statement confirms the password is being set for the user being processed.
         print("==> Setting the password for %s..." % (username))
         #The line below is creating the password for the user.  It is passing in what was sent through the create-users.index file as the user's password.
         cmd = "/bin/echo -ne '%s\n%s' | /usr/bin/sudo /usr/bin/passwd %s" % (password,password,username)
 
-        #The following lines should be uncommented once you are certain the code is running properly and you are ready to add the new user.  Once you have run a test run of the program, please uncomment the following lines of code to have it execute.
         if DryRun == 'y':
-            print(cmd)       
+            print(cmd)      
         else:
-            os.system(cmd)
+            os.system(cmd) #Will add users to the OS if this is not a dry run.
 
         for group in groups:
             #"-" is a placeholder if the user should not be assigned to any group.  If there is not a "-" in the user's group settings, they will be assigned to the correct group(s) below.
@@ -80,7 +81,7 @@ def main():
                 cmd = "/usr/sbin/adduser %s %s" % (username,group)
                 if DryRun == "y":
                     print(cmd)
-                else:
+                else: #Will add users to the correct groups if this is not a dry run.
                     os.system(cmd)              
 
 if __name__ == '__main__':
