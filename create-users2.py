@@ -38,6 +38,8 @@ def main():
         #The if statement relies on the previous two lines to determine if we should be adding this user or skipping them and to determine if the user has enough info to be added to the system.
         #It is doing that to make sure the program is receiving good information and is error handling.  If wrong information is passed in, it could create a bad user or cause the program to crash, which is obviously not good.
         if match or len(fields) != 5:
+            if DryRun = 'y':
+                print("Skipping adding user due to insufficient information or user requested skipping the user")
             continue
 
         #Now that the data is split up, we can extract it and use the data to create the user.  The first item in the list is the username, the second is the password, and the third is other information needed to create the user.
