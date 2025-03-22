@@ -20,7 +20,10 @@ def main():
         print("Not a valid entry.  Please restart the program and try again")
         quit()
 
-    for line in sys.stdin:
+    #More info on the "open" command:  https://www.w3schools.com/python/ref_func_open.asp
+    file = open("create-users.input", "r")
+
+    for line in file:
         #This will check to see if the line starts with "#".  If it does, it will skip the line since it is meant to be ignored.
         #We can use "#" in front of our lines in our create-users.input file if we want to temporarily skip adding that user for now.  Think of a comment in Python code, we just want to skip it for now.
         match = re.match("^#",line)
