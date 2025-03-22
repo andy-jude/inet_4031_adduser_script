@@ -38,7 +38,7 @@ def main():
         #The if statement relies on the previous two lines to determine if we should be adding this user or skipping them and to determine if the user has enough info to be added to the system.
         #It is doing that to make sure the program is receiving good information and is error handling.  If wrong information is passed in, it could create a bad user or cause the program to crash, which is obviously not good.
         if match or len(fields) != 5:
-            if DryRun = 'y':
+            if DryRun == 'y':
                 print("Skipping adding user due to insufficient information or user requested skipping the user")
             continue
 
